@@ -1,4 +1,5 @@
 from flask import Flask, jsonify
+from models import get_all_movies, get_movie_by_title, get_movies_by_genre
 
 app = Flask(__name__)
 
@@ -13,6 +14,26 @@ def home():
 @app.route('/status')
 def status():
     return jsonify({"status": "서버 정상 작동 중", "version": "1.0"})
+
+@app.route('/movies')
+def movies():
+    return jsonify(get_all_movies())
+
+@app.route('/movies/<title>')
+def movie(title):
+    movie = get_movie_by_title(title)
+    if movie:
+        return jsonify(movie)
+    else:
+        return jsonify({"error": "영화를 찾을 수 없습니다."}), 404
+
+@app.route('/genre/<genre>')
+def genre(genre):
+    movies = get_movies_by_genre(genre)
+    if movies:
+        return jsonify(movies)
+    else:
+        return jsonify({"error": "해당 장르의 영화를 찾을 수 없습니다."}), 404
 
 if __name__ == '__main__':
     app.run(port=5000, debug=True)
