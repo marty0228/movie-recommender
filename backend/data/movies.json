@@ -94,5 +94,11 @@
         "genre": "Sci-Fi",
         "rating": 8.5,
         "year": 1985
+    },
+    {
+        "title": "The Prestige",
+        "genre": "Mystery",
+        "rating": 8.5,
+        "year": 2006
     }
 ]
