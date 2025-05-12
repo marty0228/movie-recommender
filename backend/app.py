@@ -66,5 +66,31 @@ def add_movie_form():
     
     return render_template('add_movie.html')
 
+# 영화 수정 폼
+@app.route('/edit_movie/<title>', methods=['GET', 'POST'])
+def edit_movie(title):
+    movie = get_movie_by_title(title)
+    
+    # 영화가 없으면 404 에러 반환
+    if not movie:
+        return jsonify({"error": "영화를 찾을 수 없습니다."}), 404
+
+    if request.method == 'POST':
+        # 폼에서 전달된 수정된 영화 데이터 가져오기
+        updated_data = {
+            "title": request.form['title'],
+            "genre": request.form['genre'],
+            "rating": float(request.form['rating']),
+            "year": int(request.form['year'])
+        }
+
+        # 영화 수정
+        if update_movie(title, updated_data):
+            return redirect(url_for('home'))
+        else:
+            return "수정에 실패했습니다.", 500
+
+    return render_template('edit_movie.html', movie=movie)
+
 if __name__ == '__main__':
     app.run(port=5000, debug=True)
