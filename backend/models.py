@@ -41,3 +41,19 @@ def add_movie(movie):
         json.dump(movies, f, ensure_ascii=False, indent=4)
 
     return True
+
+# 영화 수정 함수
+def update_movie(title, updated_data):
+    movies = load_movies()
+    
+    # 수정할 영화 찾기
+    for movie in movies:
+        if movie["title"].lower() == title.lower():
+            movie.update(updated_data)
+            
+            # 수정된 데이터를 다시 파일에 저장
+            with open(DATA_FILE, "w", encoding="utf-8") as f:
+                json.dump(movies, f, ensure_ascii=False, indent=4)
+            
+            return True
+    return False
