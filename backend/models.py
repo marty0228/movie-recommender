@@ -57,3 +57,18 @@ def update_movie(title, updated_data):
             
             return True
     return False
+
+# 영화 삭제 함수 
+def delete_movie(title):
+    movies = load_movies()
+    updated_movies = [movie for movie in movies if movie["title"].lower() != title.lower()]
+
+    # 삭제할 영화가 없는 경우
+    if len(updated_movies) == len(movies):
+        return False
+
+    # 파일에 다시 저장
+    with open(DATA_FILE, "w", encoding="utf-8") as f:
+        json.dump(updated_movies, f, ensure_ascii=False, indent=4)
+
+    return True
