@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>영화 수정하기</title>
+</head>
+<body>
+    <h1>영화 수정하기</h1>
+    <form action="/edit_movie/{{ movie['title'] }}" method="post">
+        <label>영화 제목:</label><br>
+        <input type="text" name="title" value="{{ movie['title'] }}" required><br><br>
+
+        <label>장르:</label><br>
+        <input type="text" name="genre" value="{{ movie['genre'] }}" required><br><br>
+
+        <label>평점:</label><br>
+        <input type="number" name="rating" step="0.1" min="0" max="10" value="{{ movie['rating'] }}" required><br><br>
+
+        <label>개봉 연도:</label><br>
+        <input type="number" name="year" min="1800" max="2100" value="{{ movie['year'] }}" required><br><br>
+
+        <button type="submit">영화 수정</button>
+    </form>
+</body>
+</html>
