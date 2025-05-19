@@ -1,5 +1,6 @@
 from flask import Flask, jsonify, request, render_template, redirect, url_for
 from models import get_all_movies, get_movie_by_title, get_movies_by_genre,add_movie,update_movie, delete_movie
+from recommend import recommend_movies
 
 app = Flask(__name__)
 
@@ -8,8 +9,8 @@ app.config['JSON_AS_ASCII'] = False
 
 # 기본 홈 페이지
 @app.route('/')
-def home():
-    return render_template('add_movie.html')
+def index():
+    return render_template('index.html')
 
 # 모든 영화 목록 조회 (API)
 @app.route('/api/movies', methods=['GET'])
@@ -99,6 +100,14 @@ def edit_movie_form(title):
             return "수정에 실패했습니다.", 500
 
     return render_template('edit_movie.html', movie=movie)
+
+
+
+@app.route('/recommend', methods=['POST'])
+def recommend():
+    movie_title = request.form.get('movie_title')
+    recommendations = recommend_movies(movie_title, data_path='movies.csv')
+    return render_template('index.html', movie_title=movie_title, recommendations=recommendations)
 
 
 if __name__ == '__main__':
