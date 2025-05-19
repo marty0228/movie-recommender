@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Movie Recommender</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; background-color: #f9f9f9; }
+        h1 { color: #333; }
+        input, button { padding: 10px; margin: 10px 0; width: 100%; }
+        ul { list-style: none; padding: 0; }
+        li { background-color: #f1f1f1; margin: 5px 0; padding: 10px; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <h1>영화 추천 시스템</h1>
+    <form method="POST" action="/recommend">
+        <input type="text" name="movie_title" placeholder="영화 제목 입력" required>
+        <button type="submit">추천 받기</button>
+    </form>
+
+    {% if movie_title %}
+        <h2>{{ movie_title }}와(과) 유사한 영화</h2>
+        <ul>
+            {% for movie in recommendations %}
+                <li>{{ movie }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</body>
+</html>
